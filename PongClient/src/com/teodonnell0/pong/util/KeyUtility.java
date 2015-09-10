@@ -2,7 +2,6 @@ package com.teodonnell0.pong.util;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class KeyUtility {
