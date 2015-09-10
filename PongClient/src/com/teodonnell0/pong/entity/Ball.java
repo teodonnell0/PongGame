@@ -29,10 +29,12 @@ public class Ball extends MovingAbstractEntity {
 	
 	public Ball(Float x, Float y, Float width, Float height, Float initialXVelocity, Float initialYVelocity) {
 		super(x, y, width, height, initialXVelocity, initialYVelocity);
+		color = new Color(255, 246, 194);
 	}
 
 	public Ball(Float x, Float y, Float width, Float height, Float initialXVelocity, Float initialYVelocity, Float initialXAcceleration, Float initialYAcceleration) {
 		super(x, y, width, height, initialXVelocity, initialYVelocity, initialXAcceleration, initialYAcceleration);
+		color = new Color(255, 246, 194);
 	}
 	
 	public void start() {
