@@ -5,22 +5,24 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.swing.JPanel;
 
 import com.teodonnell0.pong.states.GameStateManager;
+import com.teodonnell0.pong.util.KeyUtility;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable, KeyListener {
+
+	private static final long serialVersionUID = 1610482970247299038L;
 	public static final int PANEL_WIDTH = 800;
 	public static final int PANEL_HEIGHT = 800;
-
 	public static final int BORDER_SPACING = 10;
+	
 	private Thread thread;
 	private boolean running;
 	private final int FPS = 60;
@@ -41,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void addNotify() {
 		super.addNotify();
 		if(thread == null) {
+			addKeyListener(this);
 			thread = new Thread(this);
 			thread.start();
 		}
@@ -49,7 +52,6 @@ public class GamePanel extends JPanel implements Runnable {
 	private void init() {
 		running = true;
 		bufferedImage = new BufferedImage(PANEL_WIDTH, PANEL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Font font = null;
 
 		try {
@@ -104,6 +106,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private void update() {
 		gameStateManager.update();
+		KeyUtility.update();
 	}
 
 	private void draw() {
@@ -115,6 +118,19 @@ public class GamePanel extends JPanel implements Runnable {
 		graphics.drawImage(bufferedImage, 0, 0, PANEL_WIDTH, PANEL_HEIGHT, null);
 		graphics.dispose();
 	}
+
+	@Override
+	public void keyPressed(KeyEvent keyEvent) {
+		KeyUtility.keySet(keyEvent, true);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent keyEvent) {
+		KeyUtility.keySet(keyEvent, false);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent keyEvent) {	}
 
 
 }
