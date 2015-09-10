@@ -18,7 +18,6 @@ public class KeyUtility {
 		}
 	}
 	
-	
 	public static void keySet(KeyEvent keyEvent, boolean b) {
 		int keyCode = keyEvent.getKeyCode();
 		switch (keyCode) {
