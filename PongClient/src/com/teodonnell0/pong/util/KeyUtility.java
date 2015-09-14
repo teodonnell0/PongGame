@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class KeyUtility {
 
-	public enum Key { UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE }
+	public enum Key { UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE, W, A, S, D }
 	
 	private final static Map<Key, Boolean> keyState = new HashMap<>();
 	private final static Map<Key, Boolean> previousKeyState = new HashMap<>();
@@ -35,6 +35,12 @@ public class KeyUtility {
 			break;
 		case KeyEvent.VK_SPACE:
 			keyState.put(Key.SPACE, b);
+			break;
+		case KeyEvent.VK_A:
+			keyState.put(Key.A, b);
+			break;
+		case KeyEvent.VK_D:
+			keyState.put(Key.D, b);
 		default:
 			break;
 		}

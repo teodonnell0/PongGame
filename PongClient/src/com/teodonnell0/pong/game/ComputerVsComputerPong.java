@@ -3,8 +3,8 @@ package com.teodonnell0.pong.game;
 import java.awt.Graphics2D;
 
 import com.teodonnell0.pong.entity.ComputerPaddle;
+import com.teodonnell0.pong.enums.Difficulty;
 import com.teodonnell0.pong.enums.PlayerId;
-import com.teodonnell0.pong.states.Difficulty;
 
 public class ComputerVsComputerPong extends TwoPlayerPong {
 	private Difficulty difficulty;

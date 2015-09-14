@@ -1,61 +1,53 @@
 package com.teodonnell0.pong.entity;
 
+import java.awt.geom.Rectangle2D;
+
 public abstract class MovingAbstractEntity extends AbstractEntity implements MovingEntity {
 
 	protected Float xVelocity, yVelocity;
 	
-	protected Float xAcceleration, yAcceleration;
+	protected Float previousX;
+	protected Float previousY;
 	
 	protected Float minimumVelocity;
 	protected Float maximumVelocity;
 	
-	protected Float minimumAcceleration;
-	protected Float maximumAcceleration;
-	
 	protected Long lastUpdatedTime;
-	
-	protected Integer ticks = new Integer(0);
 	
 	public MovingAbstractEntity(Float x, Float y, Float width, Float height) {
 		super(x, y, width, height);
+		this.previousX = 0f;
+		this.previousY = 0f;
 		this.xVelocity = 0f;
 		this.yVelocity = 0f;
-		
-		this.xAcceleration = 0f;
-		this.yAcceleration = 0f;
-		
+		this.minimumVelocity = 0f;
+		this.maximumVelocity = 1f;
 		this.lastUpdatedTime = System.nanoTime();
 	}
 	
-	public MovingAbstractEntity(Float x, Float y, Float width, Float height, Float initialXVelocity, Float initialYVelocity) {
-		super(x, y, width, height);
-		this.xVelocity = initialXVelocity;
-		this.yVelocity = initialYVelocity;
-		
-		this.xAcceleration = 0f;
-		this.yAcceleration = 0f;
-		
-		this.lastUpdatedTime = System.nanoTime();
+	public void setInitialVelocity(Float xVelocity, Float yVelocity) {
+		this.xVelocity = xVelocity;
+		this.yVelocity = yVelocity;
 	}
 	
-	
-	public MovingAbstractEntity(Float x, Float y, Float width, Float height, Float initialXVelocity, Float initialYVelocity, Float initialXAcceleration, Float initialYAcceleration) {
-		super(x, y, width, height);
-		this.xVelocity = initialXVelocity;
-		this.yAcceleration = initialYVelocity;
-		
-		this.xAcceleration = initialXAcceleration;
-		this.yAcceleration = initialYAcceleration;
-		
-		this.lastUpdatedTime = System.nanoTime();
+	public void reverseYVelocity() {
+		yVelocity *= -1;
 	}
 	
-	public Float getXVelocity() {
-		return xVelocity;
+	public void reverseXVelocity() {
+		xVelocity *= -1;
 	}
-
-	public Float getYVelocity() {
-		return yVelocity;
+	
+	@Override
+	public void setX(Float x) {
+		previousX = this.x;
+		this.x = x;
+	}
+	
+	@Override
+	public void setY(Float y) {
+		previousY = this.y;
+		this.y = y;
 	}
 	
 	public Float getMinimumVelocity() {
@@ -73,35 +65,43 @@ public abstract class MovingAbstractEntity extends AbstractEntity implements Mov
 	public void setMaximumVelocity(Float maximumVelocity) {
 		this.maximumVelocity = maximumVelocity;
 	}
-
-	public Float getXAcceleration() {
-		return xAcceleration;
+	
+	public boolean isIntersectedWith(Rectangle2D rectangle2D) {
+		return !this.getRectangle2D().createIntersection(rectangle2D).isEmpty();
 	}
 
-	public Float getYAcceleration() {
-		return yAcceleration;
+	public Float getxVelocity() {
+		return xVelocity;
+	}
+
+	public Float getyVelocity() {
+		return yVelocity;
+	}
+
+	public void setxVelocity(Float xVelocity) {
+		this.xVelocity = xVelocity;
+	}
+
+	public void setyVelocity(Float yVelocity) {
+		this.yVelocity = yVelocity;
+	}
+
+	public Float getPreviousX() {
+		return previousX;
+	}
+
+	public Float getPreviousY() {
+		return previousY;
+	}
+
+	public Long getLastUpdatedTime() {
+		return lastUpdatedTime;
+	}
+
+	public void setLastUpdatedTime(Long lastUpdatedTime) {
+		this.lastUpdatedTime = lastUpdatedTime;
 	}
 	
-	public Float getMinimumAcceleration() {
-		return minimumAcceleration;
-	}
-
-	public void setMinimumAcceleration(Float minimumAcceleration) {
-		this.minimumAcceleration = minimumAcceleration;
-	}
-
-	public Float getMaximumAcceleration() {
-		return maximumAcceleration;
-	}
-
-	public void setMaximumAcceleration(Float maximumAcceleration) {
-		this.maximumAcceleration = maximumAcceleration;
-	}
-
-	public boolean isStopped() {
-		return ((xVelocity == 0f) && (yVelocity == 0f));
-	}
 	
-	public abstract void tick();
 	
 }

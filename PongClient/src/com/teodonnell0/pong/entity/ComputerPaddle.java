@@ -1,9 +1,9 @@
 package com.teodonnell0.pong.entity;
 
 import com.teodonnell0.pong.GamePanel;
+import com.teodonnell0.pong.enums.Difficulty;
 import com.teodonnell0.pong.enums.PlayerId;
 import com.teodonnell0.pong.game.Pong;
-import com.teodonnell0.pong.states.Difficulty;
 
 public class ComputerPaddle extends Paddle {
 

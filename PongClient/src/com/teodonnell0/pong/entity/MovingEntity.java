@@ -1,21 +1,26 @@
 package com.teodonnell0.pong.entity;
 
+import java.awt.geom.Rectangle2D;
+
 public interface MovingEntity {
 
-	boolean isStopped();
+	void setX(Float x);
+	void setY(Float y);
 	
-	Float getXVelocity();
-	Float getYVelocity();
+	Float getX();
+	Float getY();
+	Float getxVelocity();
+	Float getyVelocity();
+
+	void setInitialVelocity(Float xVelocity, Float yVelocity);
+	void setMinimumVelocity(Float minimumVelocity);
+	void setMaximumVelocity(Float maximumVelocity);
+
+	void reverseXVelocity();
+	void reverseYVelocity();
 	
-	Float getXAcceleration();
-	Float getYAcceleration();
+	void update();
 	
-	Float getMinimumVelocity();
-	Float getMaximumVelocity();
+	boolean isIntersectedWith(Rectangle2D rectangle2D);
 	
-	Float getMinimumAcceleration();
-	Float getMaximumAcceleration();
-	
-	void setMinimumAcceleration(Float minimumAcceleration);
-	void setMaximumAcceleration(Float maximumAcceleration);
 }

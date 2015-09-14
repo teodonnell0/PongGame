@@ -3,93 +3,77 @@ package com.teodonnell0.pong.entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.util.Random;
 
 import com.teodonnell0.pong.GamePanel;
 
 public class Ball extends MovingAbstractEntity {
 
-	private Float initialVelocity = 0.1f;
-	private final static Float defaultSize = 20f;
-
+	public final static Float DEFAULT_RADIUS = 5f;
+	private final Color DEFAULT_COLOR = new Color(255, 255, 255, 150);
 	
 	public Ball() {
-		super(new Float(GamePanel.PANEL_WIDTH/2)-defaultSize/2, new Float(GamePanel.PANEL_HEIGHT/2)-defaultSize/2, defaultSize, defaultSize);
-		color = new Color(255, 246, 194);
-	}
-	
-	public Ball(Float x, Float y) {
-		super(x, y, 3f, 3f);
-		color = new Color(255, 246, 194);
-	}
-	
-	public Ball(Float x, Float y, Float width, Float height) {
-		super(x, y, width, height);
-		color = new Color(255, 246, 194);
-	}
-	
-	public Ball(Float x, Float y, Float width, Float height, Float initialXVelocity, Float initialYVelocity) {
-		super(x, y, width, height, initialXVelocity, initialYVelocity);
-		color = new Color(255, 246, 194);
-	}
-
-	public Ball(Float x, Float y, Float width, Float height, Float initialXVelocity, Float initialYVelocity, Float initialXAcceleration, Float initialYAcceleration) {
-		super(x, y, width, height, initialXVelocity, initialYVelocity, initialXAcceleration, initialYAcceleration);
-		color = new Color(255, 246, 194);
-	}
-	
-	public void start() {
-		xVelocity = initialVelocity;
-		yVelocity = initialVelocity;
-	}
-	
-	public void stop() {
-		xVelocity = 0f;
-		yVelocity = 0f;
+		super(GamePanel.PANEL_WIDTH/2f, GamePanel.PANEL_HEIGHT/2f, DEFAULT_RADIUS, DEFAULT_RADIUS);
+		setColor(DEFAULT_COLOR);
+		reset();
 	}
 	
 	public void reset() {
-		stop();
-		x = new Float(GamePanel.PANEL_WIDTH / 2);
-		y = new Float(GamePanel.PANEL_HEIGHT / 2);
+		x = (GamePanel.PANEL_WIDTH)/2f;
+		y = (GamePanel.PANEL_HEIGHT)/2f;
+		Random random = new Random();
+		int rand = random.nextInt(4);
+		
+		xVelocity = 0f;
+		yVelocity = 0f;
+		
+		switch(rand) {
+		case 0:
+			xVelocity = 0.01f;
+			break;
+		case 1:
+			yVelocity = 0.01f;
+			break;
+		case 2:
+			xVelocity = 0.01f;
+			yVelocity = 0.01f;
+			break;
+		case 3:
+		}
+		
+		xVelocity += random.nextFloat()*0.02f;
+		yVelocity += random.nextFloat()*0.02f;
+		
+		if(random.nextBoolean()) {
+			xVelocity *= -1;
+		}
+		if(random.nextBoolean()) {
+			yVelocity *= -1;
+		}	
+		lastUpdatedTime = System.nanoTime();
 	}
 
 	@Override
 	public void drawEntity(Graphics2D graphics2D) {
 		graphics2D.setColor(color);
-		graphics2D.fill((Ellipse2D)getShape());
+		Ellipse2D ellipse2D = getEllipse2D();
+		graphics2D.fill(ellipse2D);
 	}
 	
-	@Override
-	public Object getShape() {
+	public Ellipse2D getEllipse2D() {
 		return new Ellipse2D.Float(x, y, width, height);
 	}
 
 	@Override
-	public void tick() {
-		long now = System.nanoTime();
-		long duration = (now -lastUpdatedTime)/1_000_000;
-		
-		float tempX = xVelocity * (duration) + .5f * (xAcceleration) * (duration) * (duration);
-		float tempY = yVelocity * (duration) + .5f * (yAcceleration) * (duration) * (duration);
-		
-		if(x + tempX <= GamePanel.BORDER_SPACING || (x + tempX) + defaultSize/2 > GamePanel.PANEL_WIDTH-GamePanel.BORDER_SPACING*2) {
-			xVelocity = -xVelocity;
-		}
-		
-		if(y + tempY < GamePanel.BORDER_SPACING || (y + tempY) + defaultSize/2 > GamePanel.PANEL_HEIGHT-GamePanel.BORDER_SPACING*2) {
-			yVelocity = -yVelocity;
-		}
-		
-		x += xVelocity * (duration) + .5f * (xAcceleration) * (duration) * (duration);
-		y += yVelocity * (duration) + .5f * (yAcceleration) * (duration) * (duration);
-		
-		ticks = ++ticks % 10000;
-		
-		if(ticks == 0) {
-			xAcceleration += 0.01f;
-			yAcceleration += 0.01f;
-		}
-		lastUpdatedTime = System.nanoTime();
+	public void update() {
+		long endTime = System.nanoTime();
+		long duration = (endTime - lastUpdatedTime) / 100000;
+		x += xVelocity * duration *0.5f;
+		y += yVelocity * duration *0.5f;
+		lastUpdatedTime = endTime;
 	}
+	
+
+
 
 }

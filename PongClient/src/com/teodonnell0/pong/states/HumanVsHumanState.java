@@ -2,23 +2,19 @@ package com.teodonnell0.pong.states;
 
 import java.awt.Graphics2D;
 
-import com.teodonnell0.pong.enums.Difficulty;
 import com.teodonnell0.pong.enums.State;
-import com.teodonnell0.pong.game.ComputerVsComputerPong;
+import com.teodonnell0.pong.game.HumanVsHumanPong;
 
-public class ComputerVsComputerState extends GameState{
+public class HumanVsHumanState extends GameState {
 
-	
-	private Difficulty difficulty;
-	
-	public ComputerVsComputerState(GameStateManager gameStateManager, Difficulty difficulty) {
+	public HumanVsHumanState(GameStateManager gameStateManager) {
 		super(gameStateManager);
-		this.difficulty = difficulty;
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void init() {
-		pong = new ComputerVsComputerPong(difficulty);
+		pong = new HumanVsHumanPong();
 	}
 
 	@Override
@@ -31,15 +27,14 @@ public class ComputerVsComputerState extends GameState{
 	public void draw(Graphics2D graphics2D) {
 		pong.draw(graphics2D);
 	}
-	
+
 	@Override
 	public void update() {
 		super.update();
-		((ComputerVsComputerPong)pong).update();
+		((HumanVsHumanPong)pong).update();
 		
-		if(((ComputerVsComputerPong)pong).isGameOver()) {
+		if(((HumanVsHumanPong)pong).isGameOver()) {
 			gameStateManager.setState(State.MENU);
 		}
 	}
-
 }

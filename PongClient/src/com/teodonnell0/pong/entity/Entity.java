@@ -2,7 +2,7 @@ package com.teodonnell0.pong.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 
 public interface Entity {
 
@@ -12,10 +12,10 @@ public interface Entity {
 	Float getWidth();
 	Float getHeight();
 	
-	Object getShape();
+	Rectangle2D getRectangle2D();
 	
 	Color getColor();
-	
+
 	void setColor(Color color);
 	
 	void drawEntity(Graphics2D graphics2D);

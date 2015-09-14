@@ -4,10 +4,14 @@ import java.awt.Graphics2D;
 
 import org.apache.log4j.Logger;
 
+import com.teodonnell0.pong.game.Pong;
+
 
 public abstract class GameState {
 
 	protected GameStateManager gameStateManager;
+	protected Pong pong;
+	
 	protected final Logger logger = Logger.getLogger(getClass());
 	
 	public GameState(GameStateManager gameStateManager) {
